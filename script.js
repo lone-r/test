@@ -1,17 +1,24 @@
 window.addEventListener('DOMContentLoaded', (event) => {
+    const uploadContainer = document.getElementById('uploadContainer');
     const uploadForm = document.getElementById('uploadForm');
     const fileInput = document.getElementById('fileInput');
+    const fileLabel = document.getElementById('fileLabel');
     const progressBar = document.getElementById('progressBar');
-    const resultSection = document.getElementById('result');
+    const statusContainer = document.getElementById('statusContainer');
+    const statusText = document.getElementById('statusText');
+    const resultContainer = document.getElementById('resultContainer');
+    const resultText = document.getElementById('resultText');
     const modifiedVideo = document.getElementById('modifiedVideo');
-    const downloadLink = document.getElementById('downloadLink');
-    const statusText = document.getElementById('status');
 
     uploadForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
         const file = fileInput.files[0];
         if (file) {
+            uploadContainer.style.display = 'none';
+            statusContainer.style.display = 'block';
+            statusText.textContent = 'Uploading...';
+
             uploadFile(file);
         }
     });
@@ -47,7 +54,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const formData = new FormData();
         formData.append('file', file);
         xhr.send(formData);
-        statusText.textContent = 'Uploading...';
     }
 
     function addWatermark(videoUrl) {
@@ -69,14 +75,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
             const modifiedVideoUrl = canvas.toDataURL();
             modifiedVideo.src = modifiedVideoUrl;
 
-            modifiedVideo.onloadedmetadata = () => {
-                resultSection.style.display = 'block';
-                modifiedVideo.play();
-                downloadLink.style.display = 'block';
-                downloadLink.href = modifiedVideoUrl;
-                downloadLink.download = 'modified-video.mp4';
-                statusText.textContent = 'Modification Complete';
-            };
+            resultContainer.style.display = 'block';
+            resultText.textContent = 'Video Modification Complete!';
+            openNewWindow(modifiedVideoUrl);
         };
+    }
+
+    function openNewWindow(videoUrl) {
+        const newWindow = window.open('', '_blank');
+        newWindow.document.body.style.margin = '0';
+        newWindow.document.body.style.overflow = 'hidden';
+        newWindow.document.title = 'Modified Video';
+        const video = newWindow.document.createElement('video');
+        video.src = videoUrl;
+        video.controls = true;
+        video.autoplay = true;
+        video.style.width = '100%';
+        video.style.height = '100%';
+        newWindow.document.body.appendChild(video);
     }
 });
