@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const resultSection = document.getElementById('result');
     const modifiedVideo = document.getElementById('modifiedVideo');
     const downloadLink = document.getElementById('downloadLink');
+    const statusText = document.getElementById('status');
 
     uploadForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -34,16 +35,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
             } else {
                 // File upload failed
                 console.error('File upload failed!');
+                statusText.textContent = 'Upload Failed!';
             }
         };
 
         xhr.onerror = () => {
             console.error('An error occurred during the file upload!');
+            statusText.textContent = 'Upload Error!';
         };
 
         const formData = new FormData();
         formData.append('file', file);
         xhr.send(formData);
+        statusText.textContent = 'Uploading...';
     }
 
     function addWatermark(videoUrl) {
@@ -70,6 +74,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             downloadLink.style.display = 'block';
             downloadLink.href = modifiedVideoUrl;
             downloadLink.download = 'modified-video.mp4';
+            statusText.textContent = 'Modification Complete';
         };
     }
 });
