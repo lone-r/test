@@ -5,19 +5,24 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <h1>Game Stream Upload</h1>
-    <form id="uploadForm">
-        <input type="file" id="fileInput" accept="video/*">
-        <button type="submit" id="uploadButton">Upload</button>
-    </form>
-    <div id="progressBarContainer">
-        <div id="progressBar"></div>
+    <div id="uploadContainer">
+        <h1>Game Stream Upload</h1>
+        <form id="uploadForm">
+            <label for="fileInput" id="fileLabel">Select a video file:</label>
+            <input type="file" id="fileInput" accept="video/*">
+            <button type="submit" id="uploadButton">Upload</button>
+        </form>
+        <div id="progressBarContainer">
+            <div id="progressBar"></div>
+        </div>
+        <div id="statusContainer">
+            <span id="statusText">Choose a video file to upload.</span>
+        </div>
     </div>
 
-    <div id="result" style="display: none;">
-        <h2>Status: <span id="status">Processing...</span></h2>
-        <video id="modifiedVideo" controls></video>
-        <a id="downloadLink" style="display: none;">Download Modified Video</a>
+    <div id="resultContainer" style="display: none;">
+        <h2 id="resultText">Video Modification Complete!</h2>
+        <video id="modifiedVideo" controls autoplay></video>
     </div>
 
     <script src="script.js"></script>
