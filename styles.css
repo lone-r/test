@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#uploadButton {
+    padding: 10px 20px;
+}
+
+#progressBarContainer {
+    width: 200px;
+    height: 20px;
+    border: 1px solid #000;
+    margin: 20px auto;
+}
+
+#progressBar {
+    width: 0;
+    height: 100%;
+    background-color: #4CAF50;
+}
