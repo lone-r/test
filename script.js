@@ -69,12 +69,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
             const modifiedVideoUrl = canvas.toDataURL();
             modifiedVideo.src = modifiedVideoUrl;
 
-            resultSection.style.display = 'block';
-            modifiedVideo.play();
-            downloadLink.style.display = 'block';
-            downloadLink.href = modifiedVideoUrl;
-            downloadLink.download = 'modified-video.mp4';
-            statusText.textContent = 'Modification Complete';
+            modifiedVideo.onloadedmetadata = () => {
+                resultSection.style.display = 'block';
+                modifiedVideo.play();
+                downloadLink.style.display = 'block';
+                downloadLink.href = modifiedVideoUrl;
+                downloadLink.download = 'modified-video.mp4';
+                statusText.textContent = 'Modification Complete';
+            };
         };
     }
 });
