@@ -2,6 +2,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const uploadForm = document.getElementById('uploadForm');
     const fileInput = document.getElementById('fileInput');
     const progressBar = document.getElementById('progressBar');
+    const resultSection = document.getElementById('result');
+    const modifiedVideo = document.getElementById('modifiedVideo');
+    const downloadLink = document.getElementById('downloadLink');
 
     uploadForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -60,11 +63,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             ctx.fillText('Awesome time', 20, 50);
 
             const modifiedVideoUrl = canvas.toDataURL();
+            modifiedVideo.src = modifiedVideoUrl;
 
-            const downloadLink = document.createElement('a');
+            resultSection.style.display = 'block';
+            modifiedVideo.play();
+            downloadLink.style.display = 'block';
             downloadLink.href = modifiedVideoUrl;
             downloadLink.download = 'modified-video.mp4';
-            downloadLink.click();
         };
     }
 });
