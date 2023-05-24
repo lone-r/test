@@ -25,6 +25,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (xhr.status === 200) {
                 // File upload success
                 console.log('File uploaded successfully!');
+                const response = JSON.parse(xhr.responseText);
+                const videoUrl = response.videoUrl;
+                addWatermark(videoUrl);
             } else {
                 // File upload failed
                 console.error('File upload failed!');
@@ -38,5 +41,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const formData = new FormData();
         formData.append('file', file);
         xhr.send(formData);
+    }
+
+    function addWatermark(videoUrl) {
+        const video = document.createElement('video');
+        video.src = videoUrl;
+
+        video.onloadedmetadata = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+
+            ctx.font = 'bold 50px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.fillText('Awesome time', 20, 50);
+
+            const modifiedVideoUrl = canvas.toDataURL();
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = modifiedVideoUrl;
+            downloadLink.download = 'modified-video.mp4';
+            downloadLink.click();
+        };
     }
 });
